@@ -6,14 +6,19 @@ html {
   font-size: 18px;
 }
 
+body {
+  padding-bottom: 45px;
+}
+
 * {
   font-family: 'Montserrat';
   box-sizing: border-box;
   outline: none;
 }
+$primary: #252830;
 
 .header {
-  background: #252830;
+  background: $primary;
   padding: 15px;
   display: flex;
 }
@@ -29,6 +34,7 @@ html {
   transition: all 0.3s;
   position: sticky;
   top: 0;
+  z-index: 10;
   &:hover,
   &:focus-within {
     background: #f2f2f2;
@@ -38,6 +44,7 @@ html {
 %reset {
   border: 0;
   background: transparent;
+  border-radius: 0;
 }
 
 .search {
@@ -47,12 +54,19 @@ html {
   @extend %reset;
 }
 
-.submit {
+.clear {
   font-size: 20px;
-  min-width: 80px;
+  padding: 0 30px;
   cursor: pointer;
   color: #bbb;
   @extend %reset;
+}
+
+.sort {
+  flex: 0.15;
+  font-size: 18px;
+  @extend %reset;
+  border-left: 2px solid #ebebeb;
 }
 
 .grid {
@@ -74,7 +88,7 @@ html {
     transition: all 0.3s;
     &:hover {
       .movie-poster {
-        box-shadow: 0px 8px 40px 20px rgba(#252830, 0.2);
+        box-shadow: 0px 8px 40px 20px rgba($primary, 0.2);
         transform: scale(1.02);
       }
     }
@@ -89,5 +103,44 @@ html {
     margin: 0;
     padding: $padding;
     transition: none;
+  }
+}
+.loader {
+  $size: 60px;
+  $border: 8px solid;
+  border: $border #f3f3f3;
+  border-radius: 50%;
+  border-top: $border $primary;
+  width: $size;
+  height: $size;
+  margin: 0 auto;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.load-more {
+  background: transparent;
+  border: 2px solid $primary;
+  color: $primary;
+  transition: all 0.3s;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  display: block;
+  padding: 15px 30px;
+  border-radius: 30px;
+  margin: 0 auto;
+  cursor: pointer;
+  &:hover {
+    background: $primary;
+    color: #fff;
   }
 }
