@@ -1,9 +1,11 @@
 import React from 'react';
+import { CSSTransition } from 'react-transition-group';
 
 import api from './api';
 
 import Rating from './Rating';
 import Loader from './Loader';
+import Modal from './Modal';
 
 import { ReactComponent as Logo } from './logo.svg';
 import './App.scss';
@@ -14,6 +16,7 @@ class App extends React.Component {
     loading: false,
     page: 0,
     query: '',
+    sort: 'clear',
   };
 
   componentDidMount() {
@@ -79,8 +82,12 @@ class App extends React.Component {
     this.setState({ movies: [], query: '', page: 0 }, this.loadMovies);
   };
 
+  handleModalClose = () => {
+    this.setState({ movieID: -1 });
+  };
+
   render() {
-    const { loading, movies, query, sortValue } = this.state;
+    const { loading, movies, query, sortValue, movieID } = this.state;
     return (
       <div className="app">
         <header className="header">
@@ -98,7 +105,7 @@ class App extends React.Component {
         </div>
         <div className="grid">
           {movies.map(movie => (
-            <div className="movie-card" key={movie.id}>
+            <div className="movie-card" key={movie.id} onClick={() => this.setState({ movieID: movie.id })}>
               <img src={`https://image.tmdb.org/t/p/w185/${movie.poster_path}`} alt="" className="movie-poster" />
               <h4 className="movie-title">{movie.title}</h4>
               <Rating rating={movie.vote_average} defaultBase={10} />
@@ -112,6 +119,9 @@ class App extends React.Component {
             Load More
           </button>
         )}
+        <CSSTransition in={movieID > -1} timeout={300} classNames="modal" unmountOnExit>
+          <Modal movieID={movieID} onClose={this.handleModalClose} />
+        </CSSTransition>
       </div>
     );
   }
