@@ -34,7 +34,7 @@ export default class Modal extends React.Component {
                     {genres && genres.map((item, index) => `${item.name}${index < genres.length - 1 ? ', ' : ''}`)}
                   </div>
                   <Rating rating={vote_average} defaultBase={10} />
-                  <h5 className="tagline">"{tagline}"</h5>
+                  {tagline && <h5 className="tagline">"{tagline}"</h5>}
                   <h5 className="overview">{overview}</h5>
                 </div>
               </div>

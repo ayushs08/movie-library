@@ -23,6 +23,7 @@ $primary: #252830;
   background: $primary;
   padding: 15px;
   display: flex;
+  align-items: center;
 }
 
 .title {
@@ -53,20 +54,26 @@ $primary: #252830;
   flex: 1;
   font-size: 22px;
   padding: 15px;
+  padding-left: 0;
   @extend %reset;
 }
 
-.clear {
+.form-action {
   font-size: 20px;
-  padding: 0 30px;
+  padding: 0 15px;
   cursor: pointer;
   color: #bbb;
   @extend %reset;
+  transition: all 0.3s;
+  &:hover {
+    color: $primary;
+  }
 }
 
 .sort {
-  flex: 0.15;
+  min-width: 10%;
   font-size: 18px;
+  margin-left: 15px;
   @extend %reset;
   border-left: 2px solid #ebebeb;
 }
@@ -218,7 +225,6 @@ $primary: #252830;
   }
   .release {
     margin: 5px 0;
-    font-style: italic;
   }
   .genres {
     display: flex;
@@ -227,9 +233,10 @@ $primary: #252830;
   }
   .tagline {
     font-style: italic;
-    margin: 20px 0;
+    margin-top: 20px;
   }
   .overview {
     font-weight: normal;
+    margin-top: 20px;
   }
 }

@@ -45,22 +45,27 @@ class App extends React.Component {
       });
   };
 
+  handleInput = event => {
+    this.setState({ query: event.target.value });
+  };
+
   handleSearch = event => {
-    this.setState({ query: event.target.value }, () => {
-      const { query } = this.state;
-      if (query.length > 1) {
-        api
-          .get('/search/movie', {
-            params: {
-              query,
-            },
-          })
-          .then(res => {
-            const { results } = res.data;
-            this.setState({ movies: results, initialMovies: results, loading: false }, this.sort);
-          });
-      }
-    });
+    event.preventDefault();
+    const { query } = this.state;
+    if (query) {
+      api
+        .get('/search/movie', {
+          params: {
+            query,
+          },
+        })
+        .then(res => {
+          const { results } = res.data;
+          this.setState({ movies: results, initialMovies: results, loading: false }, this.sort);
+        });
+    } else {
+      this.clearSearch();
+    }
   };
 
   sort = () => {
@@ -94,15 +99,16 @@ class App extends React.Component {
           <Logo width="80" />
           <h1 className="title">Movie Library</h1>
         </header>
-        <div className="search-container">
-          <input type="text" className="search" placeholder="Search" value={query} onChange={this.handleSearch} />
-          {query && <button className="clear fas fa-times" onClick={this.clearSearch} />}
+        <form className="search-container" onSubmit={this.handleSearch}>
+          {<button className="form-action fas fa-search" type="submit" />}
+          <input type="text" className="search" placeholder="Search" value={query} onChange={this.handleInput} />
+          {query && <button className="form-action fas fa-times" onClick={this.clearSearch} />}
           <select value={sortValue} className="sort" onChange={this.handleSort}>
             <option value="clear">Sort By</option>
             <option value="vote_average">Rating</option>
             <option value="release_date">Year</option>
           </select>
-        </div>
+        </form>
         <div className="grid">
           {movies.map(movie => (
             <div className="movie-card" key={movie.id} onClick={() => this.setState({ movieID: movie.id })}>
