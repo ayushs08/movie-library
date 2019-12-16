@@ -1,4 +1,4 @@
-# Movie Library Demo
+# Movie Library
 
 ## Demo
 https://ayushs08.github.io/movie-library
